@@ -22,6 +22,7 @@ declare -a tags
 declare -A passwords
 declare -A nicks
 
+echo ""
 echo "--------------------"
 echo "Server settings"
 
@@ -108,7 +109,7 @@ i=0
 while [[ "${tags[$i]}" != "" ]]; do
 	(
 	echo "  ${tags[$i]} = { type = 'IRC';"
-		if [[ $passwords[${tags[$i]}] != "" ]]; then
+		if [[ ${passwords[${tags[$i]}]} != "" ]]; then
 			echo "    autosendcmd = \"/msg nickserv identify ${nicks[${tags[$i]}]} ${passwords[${tags[$i]}]}\";"
 		fi
 		echo "  };"
@@ -122,6 +123,10 @@ done
 	echo 'channels = ('
 ) >> $CONF
 
+echo ""
+echo "--------------------"
+echo "Channel settings"
+
 echo -n "Enter new channel (e.g. #mychan): "
 read channel
 while [[ $channel != "" ]]; do
@@ -134,21 +139,80 @@ while [[ $channel != "" ]]; do
 		autojoin="Yes"
 	fi
 	echo "{ name = '$channel'; chatnet = '$tag'; autojoin = '$autojoin'; }" >> $CONF
-	echo -n "Enter chatnet on which the channel exists (e.g. freenode): "
+	echo -n "Enter new channel (e.g. #mychan): "
 	read channel
 	if [[ $channel != "" ]]; then
 		echo "," >> $CONF
 	fi
 done
-echo "};" >> $CONF
+(
+	echo ''
+	echo ');'
+) >> $CONF
 
-echo -n "Do you want to add some stanard aliases (default no): "
+echo ""
+echo "--------------------"
+echo "Miscellaneous settings"
+
+echo  -n "Enter real name: "
+read name
+
+echo -n "Enter username: "
+read user
+
+echo -n "Enter default nickname: "
+read nickname
+
+echo -n "Enable logging (default: no): "
+read log
+if ( [ "$log" == "y" ] || [ "$log" == "yes" ] ); then
+	log="yes"
+	mkdir -p $LOGPATH
+else
+	log="no"
+fi
+
+(
+	echo 'settings = {'
+	echo '  core = {'
+	echo "real_name = '$name';"
+	echo "user_name = '$user';"
+	echo "nick = '$nickname';"
+	echo ''
+	echo '  };'
+	echo '  "fe-common/core" = {'
+	echo "autolog = '$log';"
+	echo '    autolog_path = "'$LOGPATH'/%y-%m-%d_$0.log";'
+	echo '    show_nickmode_empty = "yes";'
+	echo '    theme = "default";'
+	echo '  };'
+	echo '  "fe-text" = { colors = "yes"; autostick_split_windows = "yes"; };'
+	echo '};'
+	echo 'logs = { };'
+	echo 'ignores = ( );'
+	echo 'keyboard = ('
+	echo '  { key = "meta-1"; id = "change_window"; data = "1"; },'
+	echo '  { key = "meta-2"; id = "change_window"; data = "2"; },'
+	echo '  { key = "meta-3"; id = "change_window"; data = "3"; },'
+	echo '  { key = "meta-4"; id = "change_window"; data = "4"; },'
+	echo '  { key = "meta-5"; id = "change_window"; data = "5"; },'
+	echo '  { key = "meta-6"; id = "change_window"; data = "6"; },'
+	echo '  { key = "meta-7"; id = "change_window"; data = "7"; },'
+	echo '  { key = "meta-8"; id = "change_window"; data = "8"; },'
+	echo '  { key = "meta-9"; id = "change_window"; data = "9"; },'
+	echo '  { key = "meta-0"; id = "change_window"; data = "10"; },'
+	echo ');'
+	echo '   '
+	echo 'windows = {'
+	echo '  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };'
+	echo '};'
+	echo 'mainwindows = { 1 = { first_line = "1"; lines = "52"; }; };'
+) >> $CONF
+
+echo -n "Do you want to add some standard aliases (default no): "
 read aliases
 if ( [ "$aliases" == "yes" ] || [ "$aliases" == "y" ] ) ; then
 	(
-		echo ''
-		echo ');'
-		echo ''
 		echo 'aliases = {'
 		echo '  J = "join";'
 		echo '  WJOIN = "join -window";'
@@ -304,63 +368,7 @@ fi
 	echo '    };'
 	echo '  };'
 	echo '};'
-	echo 'settings = {'
-	echo '  core = {'
 ) >> $CONF
 
-echo  -n "Enter real name: "
-read name
-
-echo -n "Enter username: "
-read user
-
-echo -n "Enter nickname: "
-read nickname
-
-echo -n "Enable logging (default: yes): "
-read log
-if ( [ "$log" == "y" ] || [ "$log" == "yes" ] ); then
-	log="yes"
-	mkdir -p $LOGPATH
-else
-	log="no"
-fi
-
-#TODO: logapth correct?
-(
-	echo "real_name = '$name';"
-	echo "user_name = '$user';"
-	echo "nick = '$nickname';"
-	echo ''
-	echo '  };'
-	echo '  "fe-common/core" = {'
-	echo "autolog = '$log';"
-	echo '    autolog_path = "'$LOGPATH'/$tag/$0-%m%y.log";'
-	echo '    show_nickmode_empty = "yes";'
-	echo '    theme = "default";'
-	echo '  };'
-	echo '  "fe-text" = { colors = "yes"; autostick_split_windows = "yes"; };'
-	echo '};'
-	echo 'logs = { };'
-	echo 'ignores = ( );'
-	echo 'keyboard = ('
-	echo '  { key = "meta-1"; id = "change_window"; data = "1"; },'
-	echo '  { key = "meta-2"; id = "change_window"; data = "2"; },'
-	echo '  { key = "meta-3"; id = "change_window"; data = "3"; },'
-	echo '  { key = "meta-4"; id = "change_window"; data = "4"; },'
-	echo '  { key = "meta-5"; id = "change_window"; data = "5"; },'
-	echo '  { key = "meta-6"; id = "change_window"; data = "6"; },'
-	echo '  { key = "meta-7"; id = "change_window"; data = "7"; },'
-	echo '  { key = "meta-8"; id = "change_window"; data = "8"; },'
-	echo '  { key = "meta-9"; id = "change_window"; data = "9"; },'
-	echo '  { key = "meta-0"; id = "change_window"; data = "10"; },'
-	echo ');'
-	echo '   '
-	echo 'windows = {'
-	echo '  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };'
-	echo '};'
-	echo 'mainwindows = { 1 = { first_line = "1"; lines = "52"; }; };'
-	echo ')'
-) >> $CONF
-
+echo ""
 echo "Done. Once you have moved things into the correct place (with /window move), then you can use /layout save to remember it for next time."
