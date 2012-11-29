@@ -2,7 +2,7 @@
 inircosc is an '''in'''teractive '''irssi''' '''co'''nfiguration '''sc'''ript.
 
 == How you get it ==
-git clone ...
+git clone https://github.com/jubalh/inircosc.git
 
 == Run it ==
 <source>cd inircosc</source>
