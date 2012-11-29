@@ -28,11 +28,6 @@ echo "Server settings"
 
 (
 	echo "servers = ("
-	echo "  { "
-	echo "    address = 'irc.freenode.net';"
-	echo "    chatnet = 'freenode';"
-	echo "    port = '6667';"
-	echo "  }"
 ) >> $CONF
 
 echo -n "Enter new server (e.g. irc.freenode.net): "
@@ -95,14 +90,6 @@ done
 	echo ');'
 	echo ''
 	echo 'chatnets = {'
-	echo '  IRCNet = {'
-	echo '    type = "IRC";'
-	echo '    max_kicks = "4";'
-	echo '    max_modes = "3";'
-	echo '    max_msgs = "5";'
-	echo '    max_whois = "4";'
-	echo '    max_query_chans = "5";'
-	echo '  };'
 ) >> $CONF
 
 i=0
@@ -135,13 +122,13 @@ while [[ $channel != "" ]]; do
 	echo -n "Autojoin this channel (default: yes): "
 	read autojoin
 	if [[ "" == "$autojoin" ]]; then
-	#TODO: Yes really capital Y?
 		autojoin="Yes"
 	fi
 	echo "{ name = '$channel'; chatnet = '$tag'; autojoin = '$autojoin'; }" >> $CONF
 	echo -n "Enter new channel (e.g. #mychan): "
 	read channel
 	if [[ $channel != "" ]]; then
+		echo "CHANNEL IS: $chanel" # TODO : out
 		echo "," >> $CONF
 	fi
 done
