@@ -23,6 +23,7 @@ download_script http://scripts.irssi.org/scripts/auto_whois.pl auto_whois.pl
 #nicklist
 download_script http://scripts.irssi.org/scripts/nicklist.pl nicklist.pl
 #osx notifier
+#note: this depends on "terminal-notifier" which can be installed via homebrew
 un=`uname`
 if [[ "$un" == "Darwin" ]]; then
 	download_script https://raw2.github.com/paddykontschak/irssi-notifier/master/notifier.pl
