@@ -28,5 +28,8 @@ un=`uname`
 if [[ "$un" == "Darwin" ]]; then
 	download_script https://raw2.github.com/paddykontschak/irssi-notifier/master/notifier.pl
 fi
+#link shortener, prints the shortened url in the window
+download_script http://scripts.irssi.org/scripts/shorturl.pl
 
+#download_script https://raw2.github.com/pbrisbin/irssi-scripts/master/link_titles.pl
 #download_script http://scripts.irssi.org/scripts/fakectcp.pl
