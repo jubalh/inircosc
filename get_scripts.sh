@@ -29,3 +29,4 @@ if [[ "$un" == "Darwin" ]]; then
 	download_script https://raw2.github.com/paddykontschak/irssi-notifier/master/notifier.pl
 fi
 
+#download_script http://scripts.irssi.org/scripts/fakectcp.pl
