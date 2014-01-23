@@ -22,3 +22,9 @@ download_script http://scripts.irssi.org/scripts/trackbar.pl trackbar.pl
 download_script http://scripts.irssi.org/scripts/auto_whois.pl auto_whois.pl
 #nicklist
 download_script http://scripts.irssi.org/scripts/nicklist.pl nicklist.pl
+#osx notifier
+un=`uname`
+if [[ "$un" == "Darwin" ]]; then
+	download_script https://raw2.github.com/paddykontschak/irssi-notifier/master/notifier.pl
+fi
+
