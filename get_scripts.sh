@@ -30,6 +30,8 @@ if [[ "$un" == "Darwin" ]]; then
 fi
 #link shortener, prints the shortened url in the window
 download_script http://scripts.irssi.org/scripts/shorturl.pl
+#only show joins/parts/quits of active users
+download_script https://raw.githubusercontent.com/lifeforms/irssi-smartfilter/master/smartfilter.pl smartfilter.pl
 
 #download_script https://raw2.github.com/pbrisbin/irssi-scripts/master/link_titles.pl
 #download_script http://scripts.irssi.org/scripts/fakectcp.pl
